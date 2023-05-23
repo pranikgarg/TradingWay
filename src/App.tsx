@@ -33,10 +33,15 @@ function App() {
           const {
             resultData: { opDatas },
           } = res;
+
+          const date = new Date();
           const strikePriceOptions: StrikePrice[] = opDatas.map(
             (opData: OptionChain) => {
               const { strike_price = "" } = opData;
-              setDataIntoStorage(opData);
+              setDataIntoStorage({
+                ...opData,
+                timestamp: date.getHours() + ":" + date.getMinutes(),
+              });
               return { value: strike_price, label: strike_price };
             }
           );

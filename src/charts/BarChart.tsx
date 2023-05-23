@@ -23,51 +23,51 @@ const BarChart = (props: { strikePrice: StrikePrice }) => {
   const { strikePrice } = props;
 
   const labels: string[] = [
-    "9:15",
-    "9:16",
-    "9:17",
-    "9:18",
-    "9:19",
-    "9:20",
-    "9:21",
-    "9:22",
-    "9:23",
-    "9:24",
-    "9:25",
-    "9:26",
-    "9:27",
-    "9:28",
-    "9:29",
-    "9:30",
-    "9:31",
-    "9:32",
-    "9:33",
-    "9:34",
-    "9:35",
-    "9:36",
-    "9:37",
-    "9:38",
-    "9:39",
-    "9:40",
-    "9:41",
-    "9:42",
-    "9:43",
-    "9:44",
-    "9:45",
-    "9:46",
-    "9:47",
-    "9:48",
-    "9:49",
-    "9:50",
-    "9:51",
-    "9:52",
-    "9:53",
-    "9:54",
-    "9:55",
-    "9:56",
-    "9:57",
-    "9:58",
-    "9:59",
+    "09:15",
+    "09:16",
+    "09:17",
+    "09:18",
+    "09:19",
+    "09:20",
+    "09:21",
+    "09:22",
+    "09:23",
+    "09:24",
+    "09:25",
+    "09:26",
+    "09:27",
+    "09:28",
+    "09:29",
+    "09:30",
+    "09:31",
+    "09:32",
+    "09:33",
+    "09:34",
+    "09:35",
+    "09:36",
+    "09:37",
+    "09:38",
+    "09:39",
+    "09:40",
+    "09:41",
+    "09:42",
+    "09:43",
+    "09:44",
+    "09:45",
+    "09:46",
+    "09:47",
+    "09:48",
+    "09:49",
+    "09:50",
+    "09:51",
+    "09:52",
+    "09:53",
+    "09:54",
+    "09:55",
+    "09:56",
+    "09:57",
+    "09:58",
+    "09:59",
     "10:00",
     "10:01",
     "10:02",
@@ -386,18 +386,23 @@ const BarChart = (props: { strikePrice: StrikePrice }) => {
     "15:15",
   ];
 
-  const current = new Date();
+  const getPreparedData = (attribute: string) => {
+    const strikePriceData = sessionStorage.getItem(strikePrice.value);
+    if (strikePriceData) {
+      const temp = JSON.parse(strikePriceData);
+      const response = labels.map((label) => {
+        let response = undefined;
+        temp.map((item: any) => {
+          if (item.time.indexOf(label) > -1) {
+            response = item[attribute];
+          }
+        });
+        return response;
+      });
 
-  const getPreparedData = (attribute: string) =>
-    labels.map((label) => {
-      if (current.getHours() + ":" + current.getMinutes() === label) {
-        const strikePriceData = sessionStorage.getItem(strikePrice.value);
-        if (strikePriceData) {
-          const temp = JSON.parse(strikePriceData);
-          return temp[0][attribute];
-        }
-      }
-    });
+      return response;
+    }
+  };
 
   const data1 = {
     labels,
